@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const accountDetailsSchema = new Schema({
   accountHolder: {
@@ -60,5 +61,8 @@ const schema = new Schema({
     required: true,
   },
 });
+
+schema.plugin(passportLocalMongoose);
+
 
 module.exports = model("User", schema);
