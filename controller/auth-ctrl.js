@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 function generateAccessToken(user) {
   return jwt.sign(user, "Thisissecret", { expiresIn: "60000s" });
@@ -91,12 +92,12 @@ module.exports.register = async (req, res) => {
       age,
       phoneNumber,
       accountDetails,
-      isFarmer,
-      isContractor,
+      who,
       image,
     } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const secPass = await bcrypt.hash(password, salt);
     const user = new User({
-      email,
       username,
       firstName,
       lastName,
@@ -104,9 +105,9 @@ module.exports.register = async (req, res) => {
       age,
       phoneNumber,
       accountDetails,
-      isFarmer,
-      isContractor,
+      who,
       image,
+      secPass,
     });
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {

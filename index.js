@@ -1,8 +1,10 @@
 const express = require("express");
 const connectDB = require("./db/db");
+const cors = require("cors");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const Session = require("express-session");
+require('dotenv').config("./.env");
 
 connectDB();
 
@@ -10,6 +12,7 @@ const authRouter = require("./routes/auth-router");
 const User = require("./models/user");
 
 const app = express();
+app.use(cors())
 const PORT = process.env.PORT || 8000;
 
 app.use(

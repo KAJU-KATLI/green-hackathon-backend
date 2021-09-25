@@ -27,7 +27,6 @@ const schema = new Schema({
   },
   lastName: {
     type: String,
-    required: true,
   },
   address: {
     type: String,
@@ -41,24 +40,24 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  email: {
+  username: {
     type: String,
+    required:true,
   },
-  accountDetails: {
-    type: accountDetailsSchema,
-    required: true,
-  },
-  isFarmer: {
+  // accountDetails: {
+  //   type: accountDetailsSchema,
+  //   required: true,
+  // },
+  password: {
     type: String,
-    required: true,
+    required:true
   },
-  isContractor: {
+  who: {
     type: String,
     required: true,
   },
   image: {
     type: String,
-    required: true,
   },
 });
 
