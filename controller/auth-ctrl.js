@@ -1,8 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
-
-
 function generateAccessToken(user) {
   return jwt.sign(user, "Thisissecret", { expiresIn: "60000s" });
 }
@@ -82,16 +80,40 @@ module.exports.authenticateTokenRecruiter = (req, res, next) => {
 
 module.exports.register = async (req, res) => {
   try {
-    const { email, username, password } = req.body;
-    const user = new User({ email, username, isAdmin: false });
+    console.log(req.body);
+    const {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      address,
+      age,
+      phoneNumber,
+      accountDetails,
+      isFarmer,
+      isContractor,
+      image,
+    } = req.body;
+    const user = new User({
+      email,
+      username,
+      firstName,
+      lastName,
+      address,
+      age,
+      phoneNumber,
+      accountDetails,
+      isFarmer,
+      isContractor,
+      image,
+    });
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) return next(err);
       const token = generateAccessToken({ email, username });
       res.json(token);
     });
-    const userProfile = new UserProfile({ email });
-    await userProfile.save();
   } catch (err) {
     res.send(err);
   }
@@ -126,4 +148,3 @@ module.exports.user = (req, res) => {
     res.send(err);
   }
 };
-
